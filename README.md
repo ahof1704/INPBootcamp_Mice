@@ -1,17 +1,14 @@
-<h1 align="center">VocalMat</h1>
-<div align="center">
-    <strong>INP Bootcamp 2020</strong>
-</div>
+<h1 align="center">INP Bootcamp 2020</h1>
 
-<div align="center">
-    <sub>This repository was built by Katie Ferguson, Clayton Barnes and Antonio Fonseca @ Neuroscience Department, Yale University.
-</div>
+
+<p align="center">This repository was built by Katie Ferguson, Clayton Barnes and Antonio Fonseca @ Neuroscience Department, Yale University.
+
 
 <div align="center">
     <br />
     <!-- MATLAB version -->
     <a href="https://www.mathworks.com/products/matlab.html">
-    <img src="https://img.shields.io/badge/MATLAB-2017a%7C2018b-blue.svg?style=flat-square"
+    <img src="https://img.shields.io/badge/MATLAB-2017a%7C2018b%7C2020a-blue.svg?style=flat-square"
       alt="MATLAB tested versions" />
     </a>
     <!-- LICENSE -->
@@ -62,12 +59,8 @@ Download at: https://desktop.github.com
 
 ## Usage
 
-#### `VocalMat` Output Files
-
-<p align="justify">VocalMat outputs a directory with the same name as the audio file that was analyzed. Inside that directory there will be two directories (<i>All</i>, <i>All_axes</i>), and two Microsoft Excel (.xlsx) files. Inside <i>All_axes</i> you will find one image for each vocalization candidate detetcted with the resulting segmentation illusrated by sparsed blue dots. The raw original images are available inside <i>All</i>. The main Excel file has the same name of the audio file analyzed (<i>audio_file_name</i>.xlsx). This file contains information on each vocalization, such as start and end time, duration, frequency (minimum, mean and maximum), bandwidth, intensity (minimum, mean, maximum and corrected based on the backgroun), existence of harmonic components or distortions (noisy) and call type. The second excel file named as <i>audio_file_name</i>_DL.xlsx shows the probability distribution for each vocalization candidate across the different labels.
-
 ##### Software Requirements
-- __MATLAB:__ versions 2017a through 2018b. For other versions refer to the [FAQ](#faq).
+- __MATLAB:__ versions 2017a through 2020a. For other versions refer to the [FAQ](#faq).
 - __MATLAB Add-Ons:__
     - None
 
@@ -80,6 +73,5 @@ Download at: https://desktop.github.com
 </div>
 
 - **[Apache License 2.0](https://github.com/ahof1704/VocalMat/blob/VocalMat_RC/LICENSE)**
-- Copyright 2019 © <a href="http://www.dietrich-lab.org" target="_blank">Dietrich Lab</a>.
 
 <!-- version-control: 1.0 -->
