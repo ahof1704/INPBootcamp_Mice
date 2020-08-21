@@ -1,8 +1,8 @@
 <h1 align="center">INP Bootcamp 2020</h1>
 
-<div align="center">
-    <sub>This repository was built by Katie Ferguson, Clayton Barnes and Antonio Fonseca @ Neuroscience Department, Yale University.
-</div>
+
+<p align="center">This repository was built by Katie Ferguson, Clayton Barnes and Antonio Fonseca @ Neuroscience Department, Yale University.
+
 
 <div align="center">
     <br />
