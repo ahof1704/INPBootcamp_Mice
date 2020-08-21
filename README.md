@@ -1,7 +1,4 @@
-<h1 align="center">VocalMat</h1>
-<div align="center">
-    <strong>INP Bootcamp 2020</strong>
-</div>
+<h1 align="center">INP Bootcamp 2020</h1>
 
 <div align="center">
     <sub>This repository was built by Katie Ferguson, Clayton Barnes and Antonio Fonseca @ Neuroscience Department, Yale University.
@@ -61,10 +58,6 @@ Download at: https://desktop.github.com
 - __Plots:__ Directory with audio files you want to analyze in the `audios` directory
 
 ## Usage
-
-#### `VocalMat` Output Files
-
-<p align="justify">VocalMat outputs a directory with the same name as the audio file that was analyzed. Inside that directory there will be two directories (<i>All</i>, <i>All_axes</i>), and two Microsoft Excel (.xlsx) files. Inside <i>All_axes</i> you will find one image for each vocalization candidate detetcted with the resulting segmentation illusrated by sparsed blue dots. The raw original images are available inside <i>All</i>. The main Excel file has the same name of the audio file analyzed (<i>audio_file_name</i>.xlsx). This file contains information on each vocalization, such as start and end time, duration, frequency (minimum, mean and maximum), bandwidth, intensity (minimum, mean, maximum and corrected based on the backgroun), existence of harmonic components or distortions (noisy) and call type. The second excel file named as <i>audio_file_name</i>_DL.xlsx shows the probability distribution for each vocalization candidate across the different labels.
 
 ##### Software Requirements
 - __MATLAB:__ versions 2017a through 2018b. For other versions refer to the [FAQ](#faq).
