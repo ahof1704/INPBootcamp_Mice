@@ -212,6 +212,7 @@ xlabel(stimType, 'fontsize',12)
 
 %% Antonio's section
 % Design a simple spike detector
+% close all
 figure('Name','Spike detection'); 
 cleanData = smoothdata(cellData(:,1),1,'movmean',20); %Smooth signal (play with the different methods or implement your own)
 yd = diff(cleanData(:,1))./diff(time);
@@ -222,7 +223,7 @@ hold on;
 scatter(visOnDetec    , 10*ones(size(visOnDetec)),'+m');  %  plot onset times in green
 scatter(visOnT  , 10*ones(size(visOnT)),'*g');  %  plot onset times in green
 scatter(visOffT , 10*ones(size(visOffT)),'*r');  %  plot offset times in red
-lgd = legend({'Original Data','Smoothed Data','Derivative','Detected Peak', 'VisOn', 'VisOff'},'FontSize',14);
+lgd = legend({'Original Data','Smoothed Data','Derivative','Max Deriv', 'VisOn', 'VisOff'},'FontSize',14);
 
 % Compute accuracy of the spike detector
 PerformanceSpikeDetec = zeros(length(visOnT),4);
@@ -237,7 +238,7 @@ TablePerformance = array2table(PerformanceSpikeDetec,...
     'VariableNames',{'visOnT (s)','visOnDetec (s)','Error (s)', 'Detec'});
 
 title(lgd, ['Recall: ' num2str(sum(PerformanceSpikeDetec(:,4)/length(visOnT)))])
-xlabel('Time (s)')
+xlabel('Time (s)', 'fontsize',12)
 ylabel({'Average ' ; '\Delta F/F_0'}, 'fontsize',12)
 set(gca,'FontSize',15)
 
