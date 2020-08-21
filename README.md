@@ -8,7 +8,7 @@
     <br />
     <!-- MATLAB version -->
     <a href="https://www.mathworks.com/products/matlab.html">
-    <img src="https://img.shields.io/badge/MATLAB-2017a%7C2018b-blue.svg?style=flat-square"
+    <img src="https://img.shields.io/badge/MATLAB-2017a%7C2018b%7C2020a-blue.svg?style=flat-square"
       alt="MATLAB tested versions" />
     </a>
     <!-- LICENSE -->
@@ -60,7 +60,7 @@ Download at: https://desktop.github.com
 ## Usage
 
 ##### Software Requirements
-- __MATLAB:__ versions 2017a through 2018b. For other versions refer to the [FAQ](#faq).
+- __MATLAB:__ versions 2017a through 2020a. For other versions refer to the [FAQ](#faq).
 - __MATLAB Add-Ons:__
     - None
 
