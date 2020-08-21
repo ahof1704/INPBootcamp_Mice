@@ -73,6 +73,5 @@ Download at: https://desktop.github.com
 </div>
 
 - **[Apache License 2.0](https://github.com/ahof1704/VocalMat/blob/VocalMat_RC/LICENSE)**
-- Copyright 2019 © <a href="http://www.dietrich-lab.org" target="_blank">Dietrich Lab</a>.
 
 <!-- version-control: 1.0 -->
