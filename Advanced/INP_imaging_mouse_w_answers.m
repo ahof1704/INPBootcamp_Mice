@@ -31,23 +31,21 @@
 
 %% Let's start with the contrast data, 'sampleCRFdata.mat'. 
 
+clear all
+close all
 %  Load the data here
-
-load('/home/katie/Downloads/sampleCRFdata.mat'); 
-
-
+load('../Data/sampleCRFdata.mat'); 
 stimType = 'Contrast (%)';          %  change to 'Size (degrees)' for sampleRFdata.mat
 
 %  Plot your favorite 3 neurons in subplots, link the time axis (linkaxes).  What do you
 %  notice about these cells? 
-subplot(3,1,1)
-plot(time, cellData(:,1)); 
-hold on; 
-subplot(3,1,2)
-plot(time, cellData(:,2)); 
-hold on; 
-subplot(3,1,3)
-plot(time, cellData(:,3)); 
+idxNeuron = [1 2 4]; % List of neurons
+figure('Name','My favority neurons'); 
+for i = 1:length(idxNeuron)
+    subplot(3,1,i)
+    plot(time, cellData(:,idxNeuron(i))); 
+    title(['Neuron ' num2str(idxNeuron(i))]); 
+end
 
 
 %  Now let's plot a neuron with the times of the visual stimulus as '*'
@@ -58,7 +56,7 @@ visOnT       = time(visOn);               % use the vector 'time' to find the ti
 visOffT      = time(visOff);              % the time of your visual stim offset    
 
 
-figure; 
+figure('Name','Cell activity'); 
 plot(time, cellData(:,nrnNum))                                % plot the cell activity
 hold on; 
 scatter(visOnT    , 10*ones(size(visOnT)),'*g');  %  plot onset times in green
@@ -139,11 +137,14 @@ outputFigName = ['Neuron_' , num2str(nrnNum),'_heatmap'];                       
 
 % Save the visResp data for each cell.  Make sure it is saving in your
 % desired folder (i.e. specify your path)
-save(['~/Downloads/Neuron_',num2str(nrnNum)], 'visResp'); 
+if ~exist('../plots', 'dir')
+   mkdir('../plots')
+end
+save(['../plots/Neuron_',num2str(nrnNum)], 'visResp'); 
 
 % Save the plots as .fig, .jpg, .eps.  For .jpg , .eps, open them to make
 % sure they've saved as you intended.  
-fulloutputFn = fullfile('~/Downloads',outputFigName); 
+fulloutputFn = fullfile('../plots',outputFigName); 
 savefig(fulloutputFn)
 saveas(gcf, fulloutputFn, 'epsc')
 saveas(gcf, fulloutputFn, 'jpeg')
