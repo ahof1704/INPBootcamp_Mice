@@ -171,7 +171,7 @@ end
 % What is the neuron's preferred orientation?
 % (see 'errorbar' function)
 figure('Name','Stimulus orientation vs Firing rate'); % make a new figure
-errorbar(uStim,meanFr,stdFr/sqrt(length(uStim))) % plot the orientations vs the mean firing rates, adding the SEM error bars
+errorbar(uStim,meanFr,stdFr/sqrt(sum(stim==uStim(i)))) % plot the orientations vs the mean firing rates, adding the SEM error bars
 title('Stimulus orientation vs Firing rate') 
 xlabel('Orientation (degres)')
 ylabel('Firing Rate (Spikes/sec)')
@@ -203,7 +203,7 @@ for i =1:length(uStim) % iterate through each unique gradient value
     stdMeanVm(i) = std(trialVmMean(stim==uStim(i)));
 end
 figure('Name','Stimulus orientation vs membrane potential'); % make a new figure
-errorbar(uStim,meanMeanVm,stdMeanVm/sqrt(length(uStim)))
+errorbar(uStim,meanMeanVm,stdMeanVm/sqrt(sum(stim==uStim(i))))
 title('Stimulus orientation vs membrane potential') 
 xlabel('Orientation (degres)')
 ylabel('Membrane potential (V)')
