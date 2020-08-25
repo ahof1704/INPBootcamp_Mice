@@ -111,7 +111,7 @@ fr = []; % declare fr as a list so we can dynamically add to it
 for i =1:length(on) % for each presentation
     presentationSpikes = spikeTimes>on(i) & spikeTimes<off(i); % get spikes that fall into the presentation window (greater than on(i) and less than off(i), see '&' operator)
     currNumSpikes = sum(presentationSpikes); % count current number of spikes
-    presentationTime = ((off(i)-on(i))/(1000000)); % find the duration of current presentation, don't forget sampling rate!
+    presentationTime = ((off(i)-on(i))); % find the duration of current presentation, don't forget sampling rate!
     fr(end+1) = currNumSpikes/presentationTime; % divide num spikes by time to get firing rate
 end
 

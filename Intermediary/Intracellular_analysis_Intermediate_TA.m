@@ -25,8 +25,7 @@
 
 %% Settings
 clear, close all
-fs_trace = 2e3;
-fs_stimulus = 1000e3;
+
 
 %%  What's in the data?
 % Take a look at the intracellular trace.  Plot the intra against the timestamp vector. 
@@ -83,7 +82,7 @@ set(gca,'FontSize',15)
 ax2 = subplot(212); % second of the two subplots
 plot(on,stim);    % plot the stimulus onsets vs the stimulus orientation values
 title('Stimulus orienation') 
-ylabel('Orientation (degres)')
+ylabel('Orientation (degrees)')
 xlabel('Time (s)')
 legend({'Trace'});
 set(gca,'FontSize',15)
@@ -91,7 +90,7 @@ set(gca,'FontSize',15)
 % Without zooming in, the plotted orientations are not very useful. But as
 % is, zooming in will change the time axis only in one graph, making 
 % comparisons difficult. We can use the 'linkaxes' function to yoke the time
-% axes for the subplots
+% axes across subplots
 linkaxes([ax1 ax2],'x') 
 
 
@@ -119,7 +118,7 @@ set(gca,'FontSize',15)
 % 'intra' variable, taking into account the sampling rate
 
 numSpikes = length(spikeTimes);
-wholeTraceMeanFr = numSpikes/(length(intra)/fs_trace);
+wholeTraceMeanFr = numSpikes/(length(intra)/(2000));
 
 % find the baseline firing rate from the initial portion of the trace
 % see the 'find' function
@@ -127,7 +126,7 @@ baselineSpikes = find(spikeTimes<on(1)); % find all the spikes before the onset 
 baselineNumSpikes = length(baselineSpikes); % find the length of baselineNum, this gives you the number of spikes
 lastSpike = spikeTimes(baselineSpikes(end)); % find the time of the last spike in this series
 firstSpike = spikeTimes(baselineSpikes(1)); % find the time of the first spike in this series
-totalTime = (lastSpike-firstSpike)/(fs_stimulus);  %find the number of seconds represented by that interval (take into account the sampling rate of the on/off timestamps [hint: 1,000,000])
+totalTime = (lastSpike-firstSpike);  %find the number of seconds represented by that interval (take into account the sampling rate of the on/off timestamps [hint: 1,000,000])
 baseRate = baselineNumSpikes/totalTime;         % find the mean firing rate
 
 
@@ -136,7 +135,7 @@ for i =1:length(on) % 1 line challenge! See if you can calculate the firing rate
     %fr(i)=sum(spikeTimes>on(i) & spikeTimes<off(i))/((off(i)-on(i))/(1000000)); 
     presentationSpikes = spikeTimes>on(i) & spikeTimes<off(i); % get spikes that fall into the presentation window (greater than on(i) and less than off(i), see '&' operator)
     currNumSpikes = sum(presentationSpikes); % count current number of spikes
-    presentationTime = ((off(i)-on(i))/(fs_stimulus)); % find the duration of current presentation, don't forget sampling rate!
+    presentationTime = off(i)-on(i); % find the duration of current presentation, don't forget sampling rate!
     fr(i) = currNumSpikes /presentationTime; % divide num spikes by time to get firing rate
 end
 
@@ -206,7 +205,7 @@ figure('Name','Stimulus orientation vs membrane potential'); % make a new figure
 errorbar(uStim,meanMeanVm,stdMeanVm/sqrt(sum(stim==uStim(i))))
 title('Stimulus orientation vs membrane potential') 
 xlabel('Orientation (degres)')
-ylabel('Membrane potential (V)')
+ylabel('Membrane potential (mV)')
 set(gca,'FontSize',15)
 
 
