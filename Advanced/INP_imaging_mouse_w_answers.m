@@ -2,7 +2,7 @@
 %     INP data analysis bootcamp, Yale University
 %     Imaging Section: Mouse Data
 %
-%     8/27/2019 KAF
+%     8/27/2020 KAF-CJB-AF
 %     
 %     In each section, use the suggestions to fill in the variables and the
 %     rest of the necessary code.
@@ -255,7 +255,9 @@ title(lgd, ['Recall: ' num2str(sum(PerformanceSpikeDetec(:,4)/length(visOnT)))])
 xlabel('Time (s)')
 ylabel({'Average ' ; '\Delta F/F_0'})
 set(gca,'FontSize',15)
-
+outputFigName = ['Neuron_' , num2str(nrnNum),'_Detector']; 
+fulloutputFn = fullfile('../plots',outputFigName); 
+savefig(gcf,fulloutputFn)
 
 %% Exercises
 

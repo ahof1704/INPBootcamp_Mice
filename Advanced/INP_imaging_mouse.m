@@ -47,8 +47,6 @@ stimType = 'Contrast (%)';         %  change to 'Size (degrees)' for sampleRFdat
 %  P.S2: Design a script that would allow you to plot N neurons. So please,
 %  don't just call the function "plot" three times :)
 
-numCells     =   size(cellData,2);                          % number of neurons
-
 
 %% Task2
 %  Plot a neuron calcium trace and mark the time stamps of the visual
@@ -62,8 +60,8 @@ visOnT       = time(visOn);               % use the vector 'time' to find the ti
 visOffT      = time(visOff);              % the time of your visual stim offset    
 
 
-%%  Let's make our heatmap of neuron activity over each visual stimulation trial, with average activity at bottom
-
+%% Task 3
+% Let's make our heatmap of neuron activity over each visual stimulation trial, with average activity at bottom
 % first set some parameters
 
 numCells     =   size(cellData,2);                          % number of neurons
@@ -122,7 +120,7 @@ plot(   ,    ,'--w','linew',2)      % mark visual stimulation onset with a white
 title(['Neuron ', ? ])              % add the neuron number to your title using 'neuronNum'
 ylabel('Trial','fontsize',15)
 
-%% Task 3 
+%% Task 4 
 % find the average response to stimuli over every trial.  Check that you're averaging correctly by confirming the size is right
 meanResp = ?
 
@@ -169,7 +167,7 @@ pkTime = timeTrial(mxIdx);
 % (6) Make the same plots for our "sampleRFdata".
 
 
-%% Task 4
+%% Task 5
 %  Now we will look at whether the cells respond differently to various contrasts/sizes
 %  We will fill a vResp matrix (as our earlier visResp), but this time only
 %  use values between visOn and visOff
@@ -209,7 +207,7 @@ end
         
 % error bar plot of mean and SEM over observations within each feature
 f = figure; 
-errorbar(  , ,  , 's')                              
+errorbar(  ,  ,  , 's')                              
 title(['Error bar plot for Neuron ', ? ])            % replace ?
 xlabel(stimType)
 ylabel('Response')
@@ -217,23 +215,25 @@ set(gca,'FontSize',15)
 
 
 
-%% Task 5. Design a spike detector
-%% Now things will get interesting. We want you to design a detector for the neuron's response to the stimulus. 
-%% As a proxy for the GT, we will use the time stamps of visOn.
-%% There are many ways to achieve this. Use your creativity. At the end of the bootcamp, 
-%% we will check who evaluate who obtained the best recall rate.
-
-%% Do you want more?
-
-% (1) Do this for all cells.  Save your plots programatically as "sampleCRFdata_vResp_neuronX.fig", where X = 1,2,3, ... for the number of the neuron you've plotted
-% (2) Save your mean and standard deviation data as "sampleCRFdata_vResp_neuronX.mat"
-% (3) Repeat this for sampleRFdata
-% (4) In the error bar plot, change the squares to filled red circles. Play with the colors and shapes to make it look as you like! 
-% (5) For the receptive field size plots, find the stimulus size with the maximum mean 
-% (6) Make the error bars show the standard error of the mean instead of standard deviation
-% (7) Create a function for your error bar plot. (Hint: look at the plotData function we used yesterday)
-% (8) Find the overall average across cells for each stimulus value and plot using your function
-
+%% Task 6. Design a spike detector
+%% Now things will get interesting! We want you to design a detector for the
+%% neuron's response to the stimulus. 
+%% As a proxy for the GT, we will use the timestamps of visOn.
+%% There are many ways to achieve this. Use your creativity. At the end of the Bootcamp, we will check who evaluate who obtained the best recall rate :)
+% Requirements:
+%  1) Avoid using fixed thresholds/constants for the detector. Try to make
+%  your method as general as possible. If you do use constants, make sure
+%  you have a biological justification to do so.
+%  2) To quantify the performance of your method, compute the recall rate as the ratio between detected spikes over the number given in VisOn.
+%  3) Consider that a spike was correctly detected if the timestamp associated with the beginning of the peak is within 0.8s from VisOn.
+%  4) Save a figure showing the trace, visOn, visOff and marker for the
+%  detected peak. Add any other information you find relevant to your
+%  figure. Remember to do the usual formatting (axes labels, figure title,
+%  legend, etc.)
+%  Hint: Observe that you are not detecting the peak of cell activity, but
+%  when the stimulus presented (ie, when the cell activity starts to rise)
+%  Hint 2: Note that the trace has a high-frequency noise component. You
+%  might be interested in filtering it out for better detection performance
 
 
 %% Additional Exercises for the heatmap %% 
