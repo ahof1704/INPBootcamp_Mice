@@ -35,13 +35,15 @@
 <p align="justify"> <b>Intermediary</b> [add description for Intermediary programming level and what they will be working on]
 
 <p align="justify"> <b>Advanced</b> [add description for Advanced programming level and what they will be working on]
+    
+<p align="justify"> <b>Plots</b> [For plots and outputs]
 
 
 ## Getting Started
 
 ##### Cloning from the terminal (master)
 ```bash
-$ git https://github.com/ahof1704/INPBootcamp_Mice.git
+$ git clone https://github.com/ahof1704/INPBootcamp_Mice.git
 ```
 
 ##### Using a Git client
@@ -49,13 +51,6 @@ You can use a Git client to clone our repository, we recommend GitHub's own clie
 ```
 Download at: https://desktop.github.com
 ```
-
-#### Directory Structure
-- __Beginner:__ Directory with all files and scripts related to the VocalMat Identifier
-- __Intermediary:__ Directory with all files and scripts related to the VocalMat Classifier
-- __Advanced:__ Directory with audio files you want to analyze in the `audios` directory
-- __Data:__ Directory with audio files you want to analyze in the `audios` directory
-- __Plots:__ Directory with audio files you want to analyze in the `audios` directory
 
 ## Usage
 
