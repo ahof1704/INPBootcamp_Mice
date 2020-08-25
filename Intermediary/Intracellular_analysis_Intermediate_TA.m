@@ -248,35 +248,17 @@ meanIndVm = zeros([length(uStim),5800]); % preallocate for mean firing rate vari
 for i =1:length(uStim) % iterate through each unique gradient value
     meanIndVm(i,:) = mean(indVm(stim==uStim(i),:)); % take mean of firing rates corresponding to current gradient
 end
-subplot(421)
-plot(meanIndVm(1,:));
-title(uStim(1))
-subplot(422)
-plot(meanIndVm(2,:));
-title(uStim(2))
-subplot(423)
-plot(meanIndVm(3,:));
-title(uStim(3))
-subplot(424)
-plot(meanIndVm(4,:));
-title(uStim(4))
-subplot(425)
-plot(meanIndVm(5,:));
-title(uStim(5))
-subplot(426)
-plot(meanIndVm(6,:));
-title(uStim(6))
-subplot(427)
-plot(meanIndVm(7,:));
-title(uStim(7))
-subplot(428)
-plot(meanIndVm(8,:));
-title(uStim(8))
 
-integ = zeros([8,1]);
+figure('Name','Mean Stim Triggered Vm')
+
 for i = 1:8
-    integ(i)=sum(meanIndVm(i,:)+55.5);
+    plotKey = ['42' num2str(i)];
+    subplot(plotKey)
+    plot(meanIndVm(i,:));
+    title(uStim(i))
 end
+
+  
 %% Part 3: OK, do it again for cell 2.
 
 %% Part 4: extras for those with more coding experience
