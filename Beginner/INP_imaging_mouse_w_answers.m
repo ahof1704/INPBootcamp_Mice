@@ -3,7 +3,7 @@
 %     Imaging Section: Mouse Data
 %
 %     8/27/2019 KAF
-%     
+%     8/24/2020 CJB
 %     In each section, use the suggestions to fill in the variables and the
 %     rest of the necessary code.
 
@@ -147,98 +147,5 @@ fulloutputFn = fullfile('~/Downloads',outputFigName);
 savefig(fulloutputFn)
 saveas(gcf, fulloutputFn, 'epsc')
 saveas(gcf, fulloutputFn, 'jpeg')
-
-%% How long after visual stim onset does the average activity (meanResp) peak?  
-[~,mxIdx] = max(meanResp); 
-pkTime = timeTrial(mxIdx); 
-
-
-%% Exercises for the heatmap %% 
-
-% (1) Change the window sizes.  Look at two cycles simultaneously. 
-% (2) Change the proportion of subplots... 
-% (3) Change the colormap to your favorite
-
-% (4) Create the same plot for all neurons using a for loop
-% (5) Check that you've saved all the plots and data for each iteration of the loop
-
-% (6) Make the same plots for our "sampleRFdata".
-
-
-%% Now we will look at whether the cells respond differently to various contrasts/sizes
-%  We will fill a vResp matrix (as our earlier visResp), but this time only
-%  use values between visOn and visOff
-
-vResp      =   zeros(length(visOn), max(visOff-visOn)+1);                    % initialize the matrix using the 'zeros' function.  What will the size of this matrix be? 
-
-for istim =  1 : length(visOn)
-    
-    % add data for that window into a new row
-    vResp(istim,:) = data(visOn(istim):visOff(istim));
-    
-end
-
-%  We will use the average response across each 2s visual presentation
-vRespAvg = mean(vResp,2);
-
-
-stimAxis =  unique(stimValue);            % Find the unique stim values. 
-axLen    =   length(stimAxis);               % What is the length of stimAxis?
-    
-% now we will create vectors for the mean and standard deviation of visual
-% stim values across every distinct presentation type
-
-% initialize
-meanData = zeros(size(stimAxis)); 
-stdData =  zeros(size(stimAxis)); 
-
-% find data for each distinct visual stim, average and take standard deviation
-
-for istim = 1:length(stimAxis)          % iterate through all possible visual stim values       
-    vdata       =  vRespAvg(stimValue == stimAxis(istim));                 % what is the vRespAvg for this iteration of stim value ?
-    meanData(istim) =  mean(vdata); 
-    stdData(istim)  =  std(vdata); 
-end
-    
-        
-% error bar plot of mean and standard deviation over observations within each feature
-f = figure; 
-errorbar( stimAxis , meanData, stdData , 's')                              
-title(['Error bar plot for Neuron ', num2str(nrnNum) ])           % replace ?
-xlabel(stimType, 'fontsize',12)
-
-
-%% Exercises
-
-% (1) Do this for all cells.  Save your plots programatically as "sampleCRFdata_vResp_neuronX.fig", where X = 1,2,3, ... for the number of the neuron you've plotted
-% (2) Save your mean and standard deviation data as "sampleCRFdata_vResp_neuronX.mat"
-% (3) Repeat this for sampleRFdata
-% (4) In the error bar plot, change the squares to filled red circles. Play with the colors and shapes to make it look as you like! 
-% (5) For the receptive field size plots, find the stimulus size with the maximum mean 
-% (6) Make the error bars show the standard error of the mean instead of standard deviation
-% (7) Create a function for your error bar plot. (Hint: look at the plotData function we used yesterday)
-% (8) Find the overall average across cells for each stimulus value and plot using your function
-
-
-
-%% Additional Exercises for the heatmap %% 
-
-% (1) What could be a problem with our windows winStart and winEnd in the for loop?  How could we fix it?  Hint: think of the edges
-% (2) Compile all the data into one big 3D matrix (trial number x window x cell number)
-%           Bonus Challenge: Do it without a for loop!  (Hint: check out repmat)
-% (3) Plot the average across all cells.
-% (4) Make a new plotting function 'makeHeatmap' to make your
-%       heatmap/average trace figure.  
-
-
-
-%% If you want more of a challenge, ask about the wheel data ! 
-
-
-
-
-
-
-
 
 
