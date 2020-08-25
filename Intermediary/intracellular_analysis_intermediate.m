@@ -22,12 +22,20 @@
 % stim: orientations of the drifting gratings stimuli that were presented.
 % (degrees)
 
+%% Settings
+clear, close all
+fs_trace = 2e3;
+fs_stimulus = 1000e3;
 
 %%  What's in the data?
 % Take a look at the intracellular trace.  Plot the intra against the timestamp vector. 
 
 load(); % load data
 plot(); % plot intra against timestamp
+title('Intracellular trace') % Remember to always format your plots.
+ylabel('Vm')
+xlabel('Time (s)')
+set(gca,'FontSize',15)
 
 %%  What/when were the stimuli?
 % Using the plot you made of the intra trace, add dots to represent the 
