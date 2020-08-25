@@ -216,7 +216,7 @@ for istim = 1:length(stimAxis)          % iterate through all possible visual st
 end
     
         
-% error bar plot of mean and standard deviation over observations within each feature
+% error bar plot of mean and SEM over observations within each feature
 f = figure; 
 errorbar( stimAxis , meanData, semData , 's')                              
 title(['Error bar plot for Neuron ', num2str(nrnNum) ])           % replace ?
@@ -242,14 +242,14 @@ lgd = legend({'Original Data','Smoothed Data','Derivative','Detected Peak', 'Vis
 % Compute accuracy of the spike detector
 PerformanceSpikeDetec = zeros(length(visOnT),4);
 for i = 1:length(visOnT)
-    [min_idx, min_idx] = min(abs(visOnT(i) - visOnDetec));
+    [~, min_idx] = min(abs(visOnT(i) - visOnDetec));
     PerformanceSpikeDetec(i,1:3) = [visOnT(i), visOnDetec(min_idx) visOnT(i)-visOnDetec(min_idx)];
     if abs(visOnT(i)-visOnDetec(min_idx)) < 0.8 % Tolerance (in secs, to be defined)
         PerformanceSpikeDetec(i,4) = 1;
     end
 end
 TablePerformance = array2table(PerformanceSpikeDetec,...
-    'VariableNames',{'visOnT (s)','visOnDetec (s)','Error (s)', 'Detec'}); % Export the results to a table for evaluation
+    'VariableNames',{'visOnT','visOnDetec','Error', 'Detec'}); % Export the results to a table for evaluation
 
 title(lgd, ['Recall: ' num2str(sum(PerformanceSpikeDetec(:,4)/length(visOnT)))])
 xlabel('Time (s)')
