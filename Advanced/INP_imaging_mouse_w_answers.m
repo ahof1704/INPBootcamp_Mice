@@ -31,23 +31,28 @@
 
 %% Let's start with the contrast data, 'sampleCRFdata.mat'. 
 
-clear all
+clear
 close all
 %  Load the data here
-load('../Data/sampleCRFdata.mat'); 
-stimType = 'Contrast (%)';          %  change to 'Size (degrees)' for sampleRFdata.mat
+load('../Data/sampleCRFdata_SOMpopln.mat'); %  Use sampleCRFdata (4 neurons) or sampleCRFdata_SOMpopln (31 neurons)
+stimType = 'Contrast (%)';         %  change to 'Size (degrees)' for sampleRFdata.mat
 
-%  Plot your favorite 3 neurons in subplots, link the time axis (linkaxes).  What do you
+%  Plot three random neurons in subplots, link the time axis (linkaxes).  What do you
 %  notice about these cells? 
-idxNeuron = [1 2 4]; % List of neurons
+
+numCells     =   size(cellData,2);                          % number of neurons
+
+idxNeuron = randi(numCells,1,3);   % Select 3 random neurons
 figure('Name','My favority neurons'); 
 for i = 1:length(idxNeuron)
-    subplot(3,1,i)
+    ax(i) = subplot(3,1,i); 
     plot(time, cellData(:,idxNeuron(i))); 
     title(['Neuron ' num2str(idxNeuron(i))]); 
+    ylabel('Ca trace')
+    set(gca,'FontSize',15)
 end
-
-
+linkaxes(ax)
+set(gca,'FontSize',15)
 %  Now let's plot a neuron with the times of the visual stimulus as '*'
 %  using scatter.  
 
@@ -61,6 +66,11 @@ plot(time, cellData(:,nrnNum))                                % plot the cell ac
 hold on; 
 scatter(visOnT    , 10*ones(size(visOnT)),'*g');  %  plot onset times in green
 scatter(visOffT   , 10*ones(size(visOffT)),'*r');  %  plot offset times in red
+title(['Neuron ', num2str(nrnNum) ])              % add the neuron number to your title using 'neuronNum'
+ylabel('Trial')
+xlabel('Time (s)')
+legend({'Ca trace', 'VisOn', 'VisOff'});
+set(gca,'FontSize',15)
 
 
 %%  Let's make our heatmap of neuron activity over each visual stimulation trial, with average activity at bottom
@@ -121,7 +131,8 @@ caxis([0 3])                        % color axis limits
 hold on;
 plot( [0 0]  , [1, length(visOn)]   ,'--w','linew',2)      % mark visual stimulation onset with a white dashed line
 title(['Neuron ', num2str(nrnNum) ])              % add the neuron number to your title using 'neuronNum'
-ylabel('Trial','fontsize',12)
+ylabel('Trial')
+set(gca,'FontSize',15)
 
 %% find the average response to stimuli over every trial.  Check that you're averaging correctly by confirming the size is right
 meanResp = mean(visResp,1); 
@@ -129,9 +140,10 @@ meanResp = mean(visResp,1);
 %  plot the average response in the the bottom subplot
 subplot(5,1,5)
 plot(timeTrial,meanResp,'k')
-xlabel('Time (s)', 'fontsize',12)
-ylabel({'Average ' ; '\Delta F/F_0'}, 'fontsize',12)
+xlabel('Time (s)')
+ylabel({'Average ' ; '\Delta F/F_0'})
 xlim([timeTrial(1), timeTrial(end)])
+set(gca,'FontSize',15)
 
 outputFigName = ['Neuron_' , num2str(nrnNum),'_heatmap'];                       % fill in '?' for the correct neuron number.   
 
@@ -175,7 +187,9 @@ vResp      =   zeros(length(visOn), max(visOff-visOn)+1);                    % i
 for istim =  1 : length(visOn)
     
     % add data for that window into a new row
-    vResp(istim,:) = data(visOn(istim):visOff(istim));
+    aux = data(visOn(istim):visOff(istim));
+    vResp(istim,1:length(aux)) = reshape(aux,1,[]);
+
     
 end
 
@@ -186,34 +200,35 @@ vRespAvg = mean(vResp,2);
 stimAxis =  unique(stimValue);            % Find the unique stim values. 
 axLen    =   length(stimAxis);               % What is the length of stimAxis?
     
-% now we will create vectors for the mean and standard deviation of visual
+% now we will create vectors for the mean and SEM of visual
 % stim values across every distinct presentation type
 
 % initialize
 meanData = zeros(size(stimAxis)); 
-stdData =  zeros(size(stimAxis)); 
+semData =  zeros(size(stimAxis)); 
 
-% find data for each distinct visual stim, average and take standard deviation
+% find data for each distinct visual stim, average and take the SEM
 
 for istim = 1:length(stimAxis)          % iterate through all possible visual stim values       
     vdata       =  vRespAvg(stimValue == stimAxis(istim));                 % what is the vRespAvg for this iteration of stim value ?
     meanData(istim) =  mean(vdata); 
-    stdData(istim)  =  std(vdata); 
+    semData(istim)  =  std(vdata)/sqrt(sum(stimValue == stimAxis(istim))); 
 end
     
         
 % error bar plot of mean and standard deviation over observations within each feature
 f = figure; 
-errorbar( stimAxis , meanData, stdData , 's')                              
+errorbar( stimAxis , meanData, semData , 's')                              
 title(['Error bar plot for Neuron ', num2str(nrnNum) ])           % replace ?
-xlabel(stimType, 'fontsize',12)
+xlabel(stimType)
+ylabel('Response')
+set(gca,'FontSize',15)
 
 
 
-%% Antonio's section
-% Design a simple spike detector
+%% Design a spike detector
 figure('Name','Spike detection'); 
-cleanData = smoothdata(cellData(:,1),1,'movmean',20); %Smooth signal (play with the different methods or implement your own)
+cleanData = smoothdata(cellData(:,1),1,'movmean',20); % Smooth signal (play with the different methods or implement your own)
 yd = diff(cleanData(:,1))./diff(time);
 xd = (time(2:end)+time(1:(end-1)))/2;
 plot(time,cellData(:,1),time,cleanData,xd,yd)
@@ -222,23 +237,23 @@ hold on;
 scatter(visOnDetec    , 10*ones(size(visOnDetec)),'+m');  %  plot onset times in green
 scatter(visOnT  , 10*ones(size(visOnT)),'*g');  %  plot onset times in green
 scatter(visOffT , 10*ones(size(visOffT)),'*r');  %  plot offset times in red
-lgd = legend({'Original Data','Smoothed Data','Derivative','Detected Peak', 'VisOn', 'VisOff'},'FontSize',14);
+lgd = legend({'Original Data','Smoothed Data','Derivative','Detected Peak', 'VisOn', 'VisOff'});
 
 % Compute accuracy of the spike detector
 PerformanceSpikeDetec = zeros(length(visOnT),4);
 for i = 1:length(visOnT)
     [min_idx, min_idx] = min(abs(visOnT(i) - visOnDetec));
-    PerformanceSpikeDetec(i,1:3) = [visOnT(i), locs(min_idx) visOnT(i)-visOnDetec(min_idx)];
-    if abs(visOnT(i)-visOnDetec(min_idx)) < 0.8
+    PerformanceSpikeDetec(i,1:3) = [visOnT(i), visOnDetec(min_idx) visOnT(i)-visOnDetec(min_idx)];
+    if abs(visOnT(i)-visOnDetec(min_idx)) < 0.8 % Tolerance (in secs, to be defined)
         PerformanceSpikeDetec(i,4) = 1;
     end
 end
 TablePerformance = array2table(PerformanceSpikeDetec,...
-    'VariableNames',{'visOnT (s)','visOnDetec (s)','Error (s)', 'Detec'});
+    'VariableNames',{'visOnT (s)','visOnDetec (s)','Error (s)', 'Detec'}); % Export the results to a table for evaluation
 
 title(lgd, ['Recall: ' num2str(sum(PerformanceSpikeDetec(:,4)/length(visOnT)))])
 xlabel('Time (s)')
-ylabel({'Average ' ; '\Delta F/F_0'}, 'fontsize',12)
+ylabel({'Average ' ; '\Delta F/F_0'})
 set(gca,'FontSize',15)
 
 
@@ -264,9 +279,6 @@ set(gca,'FontSize',15)
 % (4) Make a new plotting function 'makeHeatmap' to make your
 %       heatmap/average trace figure.  
 
-
-
-%% If you want more of a challenge, ask about the wheel data ! 
 
 
 
