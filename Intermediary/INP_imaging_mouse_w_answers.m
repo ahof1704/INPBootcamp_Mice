@@ -39,7 +39,7 @@ load('/home/katie/Downloads/sampleCRFdata.mat');
 
 stimType = 'Contrast (%)';          %  change to 'Size (degrees)' for sampleRFdata.mat
 
-%  Plot your favorite 3 neurons in subplots, link the time axis (linkaxes).  What do you
+%  Plot your favorite 3 neurons in subplots.  What do you
 %  notice about these cells? 
 subplot(3,1,1)
 plot(time, cellData(:,1)); 
