@@ -223,7 +223,7 @@ set(gca,'FontSize',15)
 %% There are many ways to achieve this. Use your creativity. At the end of the bootcamp, 
 %% we will check who evaluate who obtained the best recall rate.
 
-%% Exercises
+%% Do you want more?
 
 % (1) Do this for all cells.  Save your plots programatically as "sampleCRFdata_vResp_neuronX.fig", where X = 1,2,3, ... for the number of the neuron you've plotted
 % (2) Save your mean and standard deviation data as "sampleCRFdata_vResp_neuronX.mat"
