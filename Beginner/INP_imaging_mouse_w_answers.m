@@ -33,22 +33,27 @@
 
 %  Load the data here
 
-load('/home/katie/Downloads/sampleCRFdata.mat'); 
+load('../Data/sampleRFdata.mat'); 
 
 
-stimType = 'Contrast (%)';          %  change to 'Size (degrees)' for sampleRFdata.mat
+stimType = 'Size (degrees)';          %  change to 'Size (degrees)' for sampleRFdata.mat
 
 %  Plot your favorite 3 neurons in subplots, link the time axis (linkaxes).  What do you
 %  notice about these cells? 
-subplot(3,1,1)
-plot(time, cellData(:,1)); 
+figure('Name','My favority neurons'); 
+ax1 = subplot(3,1,1);
+plot(time, cellData(:,1));
+ylabel({'\Delta F/F_0'})
 hold on; 
-subplot(3,1,2)
+ax2 = subplot(3,1,2);
 plot(time, cellData(:,2)); 
+ylabel({'\Delta F/F_0'})
 hold on; 
-subplot(3,1,3)
+ax3 = subplot(3,1,3);
 plot(time, cellData(:,3)); 
-
+ylabel({'\Delta F/F_0'})
+xlabel('Time (s)')
+linkaxes([ax1 ax2 ax3])
 
 %  Now let's plot a neuron with the times of the visual stimulus as '*'
 %  using scatter.  
@@ -58,12 +63,15 @@ visOnT       = time(visOn);               % use the vector 'time' to find the ti
 visOffT      = time(visOff);              % the time of your visual stim offset    
 
 
-figure; 
+figure('Name','Cell activity'); 
 plot(time, cellData(:,nrnNum))                                % plot the cell activity
 hold on; 
 scatter(visOnT    , 10*ones(size(visOnT)),'*g');  %  plot onset times in green
 scatter(visOffT   , 10*ones(size(visOffT)),'*r');  %  plot offset times in red
-
+ylabel({'\Delta F/F_0'})
+xlabel('Time (s)')
+legend({'Ca trace', 'VisOn', 'VisOff'});
+set(gca,'FontSize',15)
 
 %%  Let's make our heatmap of neuron activity over each visual stimulation trial, with average activity at bottom
 
@@ -112,28 +120,16 @@ for istim = 1:length(visOn)
     
 end
 
-h = figure;
-
-%% create the heatmap in the large top subplot
-subplot(5,1,1:4)                    %  we're creating 5 x 1 subplots, but using all the first 4 for this heatmap
-
-imagesc(timeTrial, 1:length(visOn), visResp    )                      % create a heatmap with our new matrix! 
-
-caxis([0 3])                        % color axis limits
-hold on;
-plot( [0 0]  , [1, length(visOn)]   ,'--w','linew',2)      % mark visual stimulation onset with a white dashed line
-title(['Neuron ', num2str(nrnNum) ])              % add the neuron number to your title using 'neuronNum'
-ylabel('Trial','fontsize',12)
-
 %% find the average response to stimuli over every trial.  Check that you're averaging correctly by confirming the size is right
 meanResp = mean(visResp,1); 
 
 %  plot the average response in the the bottom subplot
-subplot(5,1,5)
+figure('Name','Average response'); 
 plot(timeTrial,meanResp,'k')
 xlabel('Time (s)', 'fontsize',12)
-ylabel({'Average ' ; '\Delta F/F_0'}, 'fontsize',12)
+ylabel({'Average ' ; '\Delta F/F_0'})
 xlim([timeTrial(1), timeTrial(end)])
+set(gca,'FontSize',15)
 
 outputFigName = ['Neuron_' , num2str(nrnNum),'_heatmap'];                       % fill in '?' for the correct neuron number.   
 
@@ -147,5 +143,3 @@ fulloutputFn = fullfile('~/Downloads',outputFigName);
 savefig(fulloutputFn)
 saveas(gcf, fulloutputFn, 'epsc')
 saveas(gcf, fulloutputFn, 'jpeg')
-
-

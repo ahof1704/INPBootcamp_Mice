@@ -30,19 +30,22 @@
 %           visOn: a vector, the indices of the visual stimuli onset 
 %           visOff: a vector, the indices of the visual stimuli offset 
 
-%% Let's start with the contrast data, 'sampleCRFdata.mat'. 
+%% Let's start with the 'sampleRFdata.mat'. 
 
 %  Load the data here
 
 
 
 
-stimType = 'Contrast (%)';          %  change to 'Size (degrees)' for sampleRFdata.mat
+stimType = 'Size (degrees)';          %  change to 'Size (degrees)' for sampleRFdata.mat
 
 %  Plot your favorite 3 neurons in subplots, link the time axis (linkaxes).  What do you
 %  notice about these cells? 
+figure('Name','My favority neurons'); 
 
-
+%%%%%%%%%%%%%%%%%%%%%
+% ADD YOUR CODE HERE%
+%%%%%%%%%%%%%%%%%%%%%
 
 
 %  Now let's plot a neuron with the times of the visual stimulus as '*'
@@ -107,23 +110,11 @@ for i =
     
 end
 
-h = figure;
-
-%% create the heatmap in the large top subplot
-subplot(5,1,1:4)                    %  we're creating 5 x 1 subplots, but using all the first 4 for this heatmap
-
-imagesc(     )                      % create a heatmap with our new matrix! 
-
-caxis([0 3])                        % color axis limits
-hold on;
-plot([0 0]  , [1, length(visOn)]   ,'--w','linew',2)      % mark visual stimulation onset with a white dashed line
-title(['Neuron ', ? ])              % add the neuron number to your title using 'neuronNum'
-ylabel('Trial','fontsize',12)
-
 %% find the average response to stimuli over every trial.  Check that you're averaging correctly by confirming the size is right
 meanResp = 
 
 %  plot the average response in the the bottom subplot
+figure('Name','Average response'); 
 subplot(5,1,5)
 plot(timeTrial,meanResp,'k')
 xlabel('Time (s)', 'fontsize',12)

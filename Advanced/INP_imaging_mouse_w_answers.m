@@ -34,7 +34,7 @@
 clear
 close all
 %  Load the data here
-load('../Data/sampleCRFdata_SOMpopln.mat'); %  Use sampleCRFdata (4 neurons) or sampleCRFdata_SOMpopln (31 neurons)
+load('../Data/sampleCRFdata.mat'); %  Use sampleCRFdata (4 neurons) or sampleCRFdata_SOMpopln (31 neurons)
 stimType = 'Contrast (%)';         %  change to 'Size (degrees)' for sampleRFdata.mat
 
 %  Plot three random neurons in subplots, link the time axis (linkaxes).  What do you
@@ -48,9 +48,10 @@ for i = 1:length(idxNeuron)
     ax(i) = subplot(3,1,i); 
     plot(time, cellData(:,idxNeuron(i))); 
     title(['Neuron ' num2str(idxNeuron(i))]); 
-    ylabel('Ca trace')
+    ylabel('\Delta F/F_0')
     set(gca,'FontSize',15)
 end
+ylabel('Time (s)')
 linkaxes(ax)
 set(gca,'FontSize',15)
 %  Now let's plot a neuron with the times of the visual stimulus as '*'
@@ -67,7 +68,7 @@ hold on;
 scatter(visOnT    , 10*ones(size(visOnT)),'*g');  %  plot onset times in green
 scatter(visOffT   , 10*ones(size(visOffT)),'*r');  %  plot offset times in red
 title(['Neuron ', num2str(nrnNum) ])              % add the neuron number to your title using 'neuronNum'
-ylabel('Trial')
+ylabel('\Delta F/F_0')
 xlabel('Time (s)')
 legend({'Ca trace', 'VisOn', 'VisOff'});
 set(gca,'FontSize',15)
@@ -180,7 +181,7 @@ pkTime = timeTrial(mxIdx);
 
 %% Now we will look at whether the cells respond differently to various contrasts/sizes
 %  We will fill a vResp matrix (as our earlier visResp), but this time only
-%  use values between visOn and visOff
+%  use values between SvisOn and visOff
 
 vResp      =   zeros(length(visOn), max(visOff-visOn)+1);                    % initialize the matrix using the 'zeros' function.  What will the size of this matrix be? 
 
