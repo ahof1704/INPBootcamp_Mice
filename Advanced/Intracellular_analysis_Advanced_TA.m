@@ -238,7 +238,7 @@ figure('Name','Average Membrane Potential to Trail Onset'); % make a new figure
 trialVmMean = zeros([length(on),1]);
 trialVmStd = zeros([length(on),1]);
 
-indVm = zeros([length(on),5800]);
+indVm = zeros([length(on),5800]); %What is the 5800?
 for i =1:length(on)
     seg = intra(timestamp>on(i) & timestamp<off(i));
     indVm(i,:) = seg(1:5800);
@@ -248,14 +248,17 @@ meanIndVm = zeros([length(uStim),5800]); % preallocate for mean firing rate vari
 for i =1:length(uStim) % iterate through each unique gradient value
     meanIndVm(i,:) = mean(indVm(stim==uStim(i),:)); % take mean of firing rates corresponding to current gradient
 end
+%Missing plot here
 
 figure('Name','Mean Stim Triggered Vm')
-
-for i = 1:8
+for i = 1:length(uStim)
     plotKey = ['42' num2str(i)];
-    subplot(plotKey)
+    ax(i) = subplot(plotKey);
     plot(meanIndVm(i,:));
     title(uStim(i))
+    ylabel('Mean Stim (V)')
+    xlabel('Time (s)')
+    set(gca,'FontSize',15)
 end
-
+linkaxes(ax)
   
