@@ -16,9 +16,8 @@
 %     responses during the presentation of visual stimuli of varying sizes. 
 
 %     We will start by looking at the data. For each cell, we will 
-%     plot a heatmap to visualize the responses to visual stimuli.  Then we
-%     will create error bar plots to see if the cells respond differently
-%     to distinct contrasts/sizes. 
+%     plot a the cell activity.  Then we will create error bar plots (tuning curves) 
+%     to see if the cells respond differently to distinct contrasts/sizes. 
 
 %     There are some exercises at the end.  Don't do the 'bonus challenges'
 %     until you finish the exercises. 
@@ -30,104 +29,126 @@
 %           visOn: a vector, the indices of the visual stimuli onset 
 %           visOff: a vector, the indices of the visual stimuli offset 
 
-%% Let's start with the 'sampleRFdata.mat'. 
+%% Let's start with the 'sampleRFdata.mat'.   Complete the code as you go
+
 
 %  Load the data here
 
-
+load(  );   % add the path to the 'sampleRFdata.mat' file.
 
 
 stimType = 'Size (degrees)';          %  change to 'Size (degrees)' for sampleRFdata.mat
 
 %  Plot your favorite 3 neurons in subplots, link the time axis (linkaxes).  What do you
 %  notice about these cells? 
-figure('Name','My favority neurons'); 
 
-%%%%%%%%%%%%%%%%%%%%%
-% ADD YOUR CODE HERE%
-%%%%%%%%%%%%%%%%%%%%%
+figure('Name','My favorite neurons'); 
+ax1 = subplot(3,1, );
+plot( , cellData( , ));   % plot time vs cell activity for your first chosen neuron 
+ylabel('\Delta F/F_0')
+hold on; 
+ax2 = subplot(3,1,  );
+plot(, );     % plot time vs cell activity for your second chosen neuron 
+ylabel('\Delta F/F_0')
+hold on; 
+ax3 = subplot(3,1,  );
+plot(, );     % plot time vs cell activity for your second chosen neuron 
+ylabel('\Delta F/F_0')
+xlabel('Time (s)')
+linkaxes([ax1 ax2 ax3])
+
+
 
 
 %  Now let's plot a neuron with the times of the visual stimulus as '*'
 %  using scatter.  
 
-nrnNum       = 4;                         % pick your favorite neuron to plot first
+nrnNum       =  4;                         % pick your favorite neuron to plot first, or choose the given 4th neuron
 visOnT       =                            % use the vector 'time' to find the time of your visual stim onset  
 visOffT      =                            % the time of your visual stim offset    
 
 
-figure; 
-plot(    )                                % plot the cell activity
+% plot the cell activity.  Zoom in and examine the data
+figure('Name','Cell activity'); 
+plot(    )                                % plot the cell activity over time
 hold on; 
 scatter(    , 10*ones(size(visOnT)),'*g');  %  plot onset times in green
 scatter(    , 10*ones(size(visOffT)),'*r');  %  plot offset times in red
+ylabel('\Delta F/F_0')
+xlabel('Time (s)')
+legend({'Ca trace', 'VisOn', 'VisOff'});
+set(gca,'FontSize',15)
 
 
-%%  Let's make our heatmap of neuron activity over each visual stimulation trial, with average activity at bottom
-
-% first set some parameters
-
-numCells     =                            % number of neurons
-
-% Let's choose a time window around the visual stimulus onset so that we can
-% align our traces.   We'll start with this:
-wBeforeT    = 2;                         % in seconds 
-wAfterT     = 5;                         % in seconds
-
-% sampling frequency (Hz)
-fs           =                            % we know the total amount of time, and the number of points.  What's our sampling frequency?
-
-% given wBeforeT and wAfterT in seconds, how many points will we take before and after stimulus onset?  
-% keep in mind that we can't have a fraction of a data point...     (see function 'round')
-wBefore      = 
-wAfter       = 
-
-winSz        =                            % total number of points in our window
-
-timeTrial    = linspace(  ,   ,  );          % create a time vector from wBeforeT to wAfterT
+%% Now we will look at whether the cells respond differently to various stimulus sizes
+%  We will fill a vResp matrix with the fluorescence values between visOn and visOff
 
 nrnNum       = 4;                         % pick your favorite neuron to plot first
 
 % get the data from our chosen nrnNum out of our cellData variable 
-data         = 
+data         = cellData( , ); 
 
-%% now we will build a matrix 'visResp'. Each row will hold the fluorescence traces in a window around a visual stimuli
-%  There will be as many rows as there are visual stimulus presentations
+% initialize the matrix using the 'zeros' function.  What will the size of
+% this matrix be?   We want each row to be a visual stimulus trial, and
+% each column to be the fluorescence between the visOn and visOff indices
+% for that trial.  
+vResp      =   zeros(, );             
 
-visResp      =                            % initialize the matrix using the 'zeros' function.  What will the size of this matrix be? 
-
-% we will align this matrix based on the visual stim onset (i.e. we don't need offset here).  
-% loop through the visual stimuli and add the window of activity to the matrix in a new row
-for i =  
-    
-    % using the stimulus onset (visOn) for that trial,  what is the index of
-    % the start/end of the window?
-    wStart = 
-    wEnd   = 
+for istim =  1 : length(visOn)
     
     % add data for that window into a new row
-    visResp(   ) = data(   );
+    vResp(istim,:) = data(visOn(istim):visOff(istim));
     
 end
 
-%% find the average response to stimuli over every trial.  Check that you're averaging correctly by confirming the size is right
-meanResp = 
+%  Now take the average vResp so we get the average response of each 2s
+%  visual presentation for each trial
+vRespAvg = mean( , );
 
-%  plot the average response in the the bottom subplot
-figure('Name','Average response'); 
-subplot(5,1,5)
-plot(timeTrial,meanResp,'k')
-xlabel('Time (s)', 'fontsize',12)
-ylabel({'Average ' ; '\Delta F/F_0'}, 'fontsize',12)
-xlim([timeTrial(1), timeTrial(end)])
 
-outputFigName = ['Neuron_' ? '_heatmap'];                       % fill in '?' for the correct neuron number.   
+stimAxis =  ;            % Find the unique stim values.  Hint: Check out the function 'unique'
+axLen    =  ;               % What is the length of stimAxis?  
+    
+% now we will create vectors for the mean and SEM of visual
+% stimuls values across every distinct presentation type
 
-% Save the visResp data for each cell.  Make sure it is saving in your
+% initialize
+meanData = zeros(size(stimAxis));    % do you know why we initialize with zeros of this size? 
+semData =  zeros(size(stimAxis)); 
+
+% find data for each distinct visual stim, average and take SEM
+
+for istim = 1:                                   % iterate through all possible visual stim values       
+    vdata       =  vRespAvg(  );                 % what are the values of the vRespAvg for this stim value ?
+    meanData(istim) =  ; 
+    n = ;                                        % how many trials do we have for this stimulus? 
+    semData(istim)  =  ;                         % recall the SEM is the standard deviation divided by the square root of the n.  see functions 'std' and 'sqrt'
+end
+    
+        
+% Tuning curve (with an error bar plot) using the mean and SEM over
+% distinct stimulus sizes
+f = figure; 
+errorbar(  , ,  , 's')                              
+title(['Size tuning curve for Neuron ', ? ])           % replace ?
+xlabel(stimType, 'fontsize',12)
+ylabel('\Delta F/F_0')
+set(gca,'FontSize',15)
+
+
+outputFigName = ['Neuron_' , ? ,'_size_tuning_curve'];                       % fill in '?' for the correct neuron number.   
+
+% Save the data visResp , stimAxis, meanData, and semData.  Make sure it is saving in your
 % desired folder (i.e. specify your path)
-
+save(['../Data/Neuron_',num2str(nrnNum)], 'visResp', 'meanData','semData');      % change '../Data/' to your own path to save the data
 
 % Save the plots as .fig, .jpg, .eps.  For .jpg , .eps, open them to make
 % sure they've saved as you intended.  
+fulloutputFn = ['../plots/', ? ];         % save figures in a "plots" folder.   What does all this mean?
+if ~exist('../plots','dir')
+    mkdir('../plots');
+end
 
-
+savefig(  )             % use the file name you just generated .   what does this save?
+saveas(gcf,  ,  )       % what does gcf mean?   How do you save an .eps figure?  
+saveas(gcf,   ,  )      % save your .jpg figure
