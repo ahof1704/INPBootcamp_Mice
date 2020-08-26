@@ -186,28 +186,14 @@ ppUStim = ;
 ppMeanFr = ;
 polarplot(,)
 
-%% Polar plot of spike and Vm tuning on same plot
+%% Polar plot of spike, Vm  and membrane fluctuation (std) tuning on same plot
 % scale by mean for visualization
 ppUStim = ;
+ppVmFluct = ;
 ppMeanMeanVm =;
 polarplot(,)
 hold on % must do after calling first polar plot. Otherwise it assumes you want a regular plot, leading to an error
 polarplot(,)
-
+polarplot(,)
 % what do the different shapes tell you about underlying computations?
 
-%% Average Vm to trial onset
-
-trialVmMean = ;
-trialVmStd = ;
-
-indVm = ;
-for i =1:
-    seg = ;
-    indVm(i,:) = ;
-end
-
-meanIndVm = ; % preallocate for mean firing rate variable
-for i =1: % iterate through each unique gradient value
-    meanIndVm(i,:) = ; % take mean of firing rates corresponding to current gradient
-end
