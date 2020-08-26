@@ -3,7 +3,7 @@
 %     Imaging Section: Mouse Data
 %
 %     8/27/2019 KAF
-%     8/24/2020 CJB
+%     8/24/2020 CJB, KAF, AOF
 %
 %     In each section, use the suggestions to fill in the variables and the
 %     rest of the necessary code.
