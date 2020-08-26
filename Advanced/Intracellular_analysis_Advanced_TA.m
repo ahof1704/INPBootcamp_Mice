@@ -219,43 +219,19 @@ polarplot(ppUStim/180*pi,ppMeanFr)
 title('Stimulus orientation vs Firing rate') 
 set(gca,'FontSize',15)
 
-%% Polar plot of spike and Vm tuning on same plot
+%% Polar plot of spike, Vm  and membrane fluctuation tuning on same plot
 % scale by mean for visualization
 figure('Name','Stimulus orientation vs Firing Rate and Membrane Potential'); % make a new figure
 ppUStim = [uStim uStim(1)];
+ppVmFluct = [stdMeanVm stdMeanVm(1)];
 ppMeanMeanVm = [meanMeanVm; meanMeanVm(1)];
 polarplot(ppUStim/180*pi,ppMeanFr/mean(ppMeanFr))
 hold on
 polarplot(ppUStim/180*pi,ppMeanMeanVm/mean(ppMeanMeanVm))
+polarplot(ppUStim/180*pi,ppVmFluct/mean(stdMeanVm))
 title('Stimulus orientation vs Firing Rate and Membrane Potential') 
-legend({'Firing rate', 'Membrane potential'});
+legend({'Firing rate', 'Membrane potential','Membrane fluctuations'});
 set(gca,'FontSize',15)
 
 % what do the different shapes tell you about underlying computations?
 
-%% Average Vm to trial onset
-figure('Name','Average Membrane Potential to Trail Onset'); % make a new figure
-trialVmMean = zeros([length(on),1]);
-trialVmStd = zeros([length(on),1]);
-
-indVm = zeros([length(on),5800]);
-for i =1:length(on)
-    seg = intra(timestamp>on(i) & timestamp<off(i));
-    indVm(i,:) = seg(1:5800);
-end
-
-meanIndVm = zeros([length(uStim),5800]); % preallocate for mean firing rate variable
-for i =1:length(uStim) % iterate through each unique gradient value
-    meanIndVm(i,:) = mean(indVm(stim==uStim(i),:)); % take mean of firing rates corresponding to current gradient
-end
-
-figure('Name','Mean Stim Triggered Vm')
-
-for i = 1:8
-    plotKey = ['42' num2str(i)];
-    subplot(plotKey)
-    plot(meanIndVm(i,:));
-    title(uStim(i))
-end
-
-  
