@@ -177,3 +177,37 @@ errorbar(,,)
 
 
 
+%% Plot the tuning curves as a polar plot. Don't forget to
+% convert to radians!
+% Hint: to make it pretty, append the first value to the end to close the
+% circle
+
+ppUStim = ;
+ppMeanFr = ;
+polarplot(,)
+
+%% Polar plot of spike and Vm tuning on same plot
+% scale by mean for visualization
+ppUStim = ;
+ppMeanMeanVm =;
+polarplot(,)
+hold on % must do after calling first polar plot. Otherwise it assumes you want a regular plot, leading to an error
+polarplot(,)
+
+% what do the different shapes tell you about underlying computations?
+
+%% Average Vm to trial onset
+
+trialVmMean = ;
+trialVmStd = ;
+
+indVm = ;
+for i =1:
+    seg = ;
+    indVm(i,:) = ;
+end
+
+meanIndVm = ; % preallocate for mean firing rate variable
+for i =1: % iterate through each unique gradient value
+    meanIndVm(i,:) = ; % take mean of firing rates corresponding to current gradient
+end
