@@ -3,7 +3,7 @@
 %     Imaging Section: Mouse Data
 %
 %     8/27/2019 KAF
-%     8/24/2020 CJB
+%     8/24/2020 CJB, KAF, AOF
 %
 %     In each section, use the suggestions to fill in the variables and the
 %     rest of the necessary code.
@@ -41,8 +41,12 @@ stimType = 'Contrast (%)';          %  change to 'Size (degrees)' for sampleRFda
 
 %  Plot your favorite 3 neurons in subplots.  What do you
 %  notice about these cells? 
-
-
+figure('Name','My favorite neurons'); 
+ax1 = subplot( ,  , );
+plot( ,  );         % plot time vs cell activity for your first chosen neuron 
+ylabel('\Delta F/F_0')
+hold on;
+                    % fill out the code for the rest of the subplots
 
 
 %  Now let's plot a neuron with the times of the visual stimulus as '*'
@@ -107,9 +111,11 @@ for i =
     
 end
 
-h = figure;
+
 
 %% create the heatmap in the large top subplot
+h = figure('Name','heatmap');
+
 subplot(5,1,1:4)                    %  we're creating 5 x 1 subplots, but using all the first 4 for this heatmap
 
 imagesc(     )                      % create a heatmap with our new matrix! 
@@ -140,21 +146,7 @@ outputFigName = ['Neuron_' ? '_heatmap'];                       % fill in '?' fo
 % sure they've saved as you intended.  
 
 
-
 %% How long after visual stim onset does the average activity (meanResp) peak?  
-
-
-
-%% Exercises for the heatmap %% 
-
-% (1) Change the window sizes.  Look at two cycles simultaneously. 
-% (2) Change the proportion of subplots... 
-% (3) Change the colormap to your favorite
-
-% (4) Create the same plot for all neurons using a for loop
-% (5) Check that you've saved all the plots and data for each iteration of the loop
-
-% (6) Make the same plots for our "sampleRFdata".
 
 
 %% Now we will look at whether the cells respond differently to various contrasts/sizes
@@ -186,17 +178,31 @@ semData =
 
 % find data for each distinct visual stim, average and take the SEM
 
-for i =                  % iterate through all possible visual stim values       
-    vdata           =                   % what is the vRespAvg for this iteration of stim value ?
-    meanData(i) = 
-    semData(i)  = 
+for istim =                  % iterate through all possible visual stim values       
+    vdata           =                   % what is the vRespAvg for this iteration of stim value istim
+    meanData(istim) = 
+    semData(istim)  =                       % recall, the SEM is the standard deviation divided by the square root of the number of samples
 end
     
         
-% error bar plot of mean and standard deviation over observations within each feature
-f = figure; 
+% tuning curve using the mean and SEM for each stimulus
+h2 = figure('Name','tuning curve');
 errorbar(  , ,  , 's')                              
 title(['Error bar plot for Neuron ', ? ])           % replace ?
 xlabel(stimType, 'fontsize',12)
 
+
+
+
+
+%% Additional exercises for the heatmap %% 
+
+% (1) Change the window sizes.  Look at two cycles simultaneously. 
+% (2) Change the proportion of subplots... 
+% (3) Change the colormap to your favorite
+
+% (4) Create the same plot for all neurons using a for loop
+% (5) Check that you've saved all the plots and data for each iteration of the loop
+
+% (6) Make the same plots for our "sampleRFdata".
 

@@ -3,7 +3,7 @@
 %     Imaging Section: Mouse Data
 %
 %     8/27/2019 KAF
-%     8/24/2020 CJB
+%     8/24/2020 CJB, KAF, AOF
 %
 %     In each section, use the suggestions to fill in the variables and the
 %     rest of the necessary code.
@@ -34,13 +34,14 @@
 
 %  Load the data here
 
-load('/home/katie/Downloads/sampleCRFdata.mat'); 
+load('../Data/sampleCRFdata.mat'); 
 
 
 stimType = 'Contrast (%)';          %  change to 'Size (degrees)' for sampleRFdata.mat
 
 %  Plot your favorite 3 neurons in subplots.  What do you
 %  notice about these cells? 
+figure('Name','My favorite neurons'); 
 subplot(3,1,1)
 plot(time, cellData(:,1)); 
 hold on; 
@@ -113,9 +114,10 @@ for istim = 1:length(visOn)
     
 end
 
-h = figure;
 
 %% create the heatmap in the large top subplot
+h = figure('Name','heatmap');
+
 subplot(5,1,1:4)                    %  we're creating 5 x 1 subplots, but using all the first 4 for this heatmap
 
 imagesc(timeTrial, 1:length(visOn), visResp    )                      % create a heatmap with our new matrix! 
@@ -140,7 +142,7 @@ outputFigName = ['Neuron_' , num2str(nrnNum),'_heatmap'];                       
 
 % Save the visResp data for each cell.  Make sure it is saving in your
 % desired folder (i.e. specify your path)
-save(['~/Downloads/Neuron_',num2str(nrnNum)], 'visResp'); 
+save(['../Data/Neuron_',num2str(nrnNum)], 'visResp'); 
 
 % Save the plots as .fig, .jpg, .eps.  For .jpg , .eps, open them to make
 % sure they've saved as you intended.  
@@ -154,19 +156,7 @@ saveas(gcf, fulloutputFn, 'jpeg')
 pkTime = timeTrial(mxIdx); 
 
 
-%% Exercises for the heatmap %% 
-
-% (1) Change the window sizes.  Look at two cycles simultaneously. 
-% (2) Change the proportion of subplots... 
-% (3) Change the colormap to your favorite
-
-% (4) Create the same plot for all neurons using a for loop
-% (5) Check that you've saved all the plots and data for each iteration of the loop
-
-% (6) Make the same plots for our "sampleRFdata".
-
-
-%% Now we will look at whether the cells respond differently to various contrasts/sizes
+%% Now we will look at whether the cells respond differently to various contrasts
 %  We will fill a vResp matrix (as our earlier visResp), but this time only
 %  use values between visOn and visOff
 
@@ -193,20 +183,31 @@ axLen    =   length(stimAxis);               % What is the length of stimAxis?
 meanData = zeros(size(stimAxis)); 
 semData =  zeros(size(stimAxis)); 
 
-% find data for each distinct visual stim, average and take standard deviation
+% find data for each distinct visual stim, average and take SEM
 
 for istim = 1:length(stimAxis)          % iterate through all possible visual stim values       
-    vdata       =  vRespAvg(stimValue == stimAxis(istim));                 % what is the vRespAvg for this iteration of stim value ?
+    vdata           =  vRespAvg(stimValue == stimAxis(istim));                 % what is the vRespAvg for this iteration of stim value ?
     meanData(istim) =  mean(vdata); 
-    semData(istim)  =  std(vdata)/sum(stimValue == stimAxis(istim)); 
+    n               =  sum(stimValue == stimAxis(istim)); 
+    semData(istim)  =  std(vdata)/sqrt(n);       % recall, the SEM is the standard deviation divided by the square root of the number of samples
 end
     
         
-% error bar plot of mean and standard deviation over observations within each feature
-f = figure; 
+% tuning curve using the mean and SEM for each stimulus
+h2 = figure('Name','tuning curve');
 errorbar( stimAxis , meanData, semData , 's')                              
 title(['Error bar plot for Neuron ', num2str(nrnNum) ])           % replace ?
 xlabel(stimType, 'fontsize',12)
 
 
+%% Additional exercises for the heatmap %% 
+
+% (1) Change the window sizes.  Look at two cycles simultaneously. 
+% (2) Change the proportion of subplots... 
+% (3) Change the colormap to your favorite
+
+% (4) Create the same plot for all neurons using a for loop
+% (5) Check that you've saved all the plots and data for each iteration of the loop
+
+% (6) Make the same plots for our "sampleRFdata".
 
