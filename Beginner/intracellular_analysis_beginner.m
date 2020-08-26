@@ -1,5 +1,5 @@
 % JAC 8-20-2019, updated 8-25-2019
-% Modified by CJB 8-24-2020
+% Modified by CJB-KAF-AF 8-27-2020 
 %
 % In each section, use the suggestions to fill in the variables and the
 % rest of the necessary code.
@@ -40,7 +40,7 @@ plot()
 on()
 
 % Hmm.. something doesn't seem right. It looks like the stimulus is shown
-% at around 6000 on the x axis, but the first 'on' value is 1.3261e+10!
+% at around 6000 on the x axis, but the first 'on' value is ~3!
 % If you only pass one vector to the plot function, it plots the index
 % number on the x axis, but we want time so we can compare to the first
 % stimulus onset. To do this, we can pass the 'timestamp' variable to the
@@ -104,16 +104,23 @@ spikeTimes = ;
 % values, thus counting the number of spikes that fall between the 'on' and
 % 'off' times. Lastly, we calculate the total duration of presentation, and
 % then divide the number of spikes by this time to get the firing rate.
-% Note: the 'on' and 'off' values have a precision of 1000000 Hz.
 
 
 fr = []; % declare fr as a list so we can dynamically add to it
 for i =1:length(on) % for each presentation
     presentationSpikes = > & < ; % get spikes that fall into the presentation window (greater than on(i) and less than off(i), see '&' operator)
-    currNumSpikes = ; % count current number of spikes
-    presentationTime = ; % find the duration of current presentation, don't forget sampling rate!
-    fr(end+1) = ; % divide num spikes by time to get firing rate
+    currNumSpikes      = ; % count current number of spikes
+    presentationTime   = ; % find the duration of current presentation, don't forget sampling rate!
+    fr(end+1)          = ; % divide num spikes by time to get firing rate.  We append this to the end of your vector fr using fr(end +1)
 end
+
+% let's take a look at a histogram of the firing rates evoked by the
+% stimuli using the histogram function
+figure('Name','Histogram')
+nbins = 15;            % the number of bins we'll use for the histogram
+histogram(? ,nbins)    % replace ? with our newfound firing rates
+xlabel('Firing Rate (Hz)')
+title('Histogram of Stimulus Evoked Firing Rates')
 
 
 %% Tuning curves!
@@ -126,22 +133,24 @@ uStim = unique(stim);
 
 % Like above, we will use a for loop. This time, it is to find the mean
 % firing rate for each stimulus gradient. We will accomplish this by
-% finding the trial indices that correspond to a given gradient (say, 0
+% finding the trial indices that correspond to a given orientation of stimulus (say, 0
 % degrees). Using the indices, we can grab the corresponding firing rates 
 % and calculate their mean. 
 
 meanFr = []; % declare meanFr as list so we can dynamically add to it
 
-for i = 1:length(uStim) % iterate through each unique gradient value
-    gradientInd = ; % get indicies that correspond to current gradient
-    gradientFr = ; % get current firing rates of interest by indexing 'fr'
-    meanFr(end+1) = ; % take the mean
+for i = 1:length(uStim) % iterate through each unique gradient value (i.e. orientation)
+    gradientInd = ;     % get indicies that correspond to current gradient
+    gradientFr = ;      % get current firing rates of interest by indexing 'fr'
+    meanFr(end+1) = ;   % take the mean
 end
 
 %plot the firing rate against the stimulus presentations to get your tuning
 %curve!
+figure('Name','Tuning Curve');
 plot(,)
 
+% don't forget to label your axes!  Give your plot a title as well
 
 
 

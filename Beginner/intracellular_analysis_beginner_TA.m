@@ -1,5 +1,5 @@
 % JAC 8-20-2019, updated 8-25-2019
-% Modified by CJB 8-24-2020
+% Modified by CJB-KAF-AF 8-27-2020
 %
 % In each section, use the suggestions to fill in the variables and the
 % rest of the necessary code.
@@ -14,7 +14,8 @@
 %(or double clicking on the file in the 'current folder' panel of the GUI)
 % and then plot the 'intra' variable
 
-load('Cell1_data.mat'); % load data
+load('../Data/Neuron1_data.mat'); % load data
+figure('Name','Intracellular Recording');  
 plot(intra); % plot 'intra'
 
 % feel free to zoom in to look at the trace!
@@ -30,8 +31,9 @@ plot(intra); % plot 'intra'
 % the 'off' variable, fill in the variable names to get the indices of the 
 % 'intra' variable that occur before the first offset.
 
-indices = find(timestamp <off(1));
+indices = find(timestamp < off(1));
 
+figure('Name','Intracellular Recording Up to End of 1st Visual Stimulus');  
 plot(intra(indices))
 
 % looking at the figure, can you guess when the stimulus was presented?
@@ -40,7 +42,7 @@ plot(intra(indices))
 on(1)
 
 % Hmm.. something doesn't seem right. It looks like the stimulus is shown
-% at around 6000 on the x axis, but the first 'on' value is 1.3261e+10!
+% at around 6000 on the x axis, but the first 'on' value is ~3!
 % If you only pass one vector to the plot function, it plots the index
 % number on the x axis, but we want time so we can compare to the first
 % stimulus onset. To do this, we can pass the 'timestamp' variable to the
@@ -98,23 +100,29 @@ spikeTimes = timestamp(locs);
 % the 'on' and 'off' times. We can accomplish this with the '&' operator.
 % The operator will return true only if both values are also true. We can
 % take advantage of this to only select those spikes that are > the 'on' time
-% and < the 'off' time. Matlab is also nice in that is is easy to transfer 
+% and < the 'off' time. Matlab is also nice in that it is easy to transfer 
 % between boolean logic (true and false) and numbers (1 and 0). 
 % By calling sum on a boolean vector, we can count the number of true 
 % values, thus counting the number of spikes that fall between the 'on' and
 % 'off' times. Lastly, we calculate the total duration of presentation, and
 % then divide the number of spikes by this time to get the firing rate.
-% Note: the 'on' and 'off' values have a precision of 1000000 Hz.
 
 
-fr = []; % declare fr as a list so we can dynamically add to it
+fr = []; % declare fr as an empty vector so we can dynamically add to it
 for i =1:length(on) % for each presentation
     presentationSpikes = spikeTimes>on(i) & spikeTimes<off(i); % get spikes that fall into the presentation window (greater than on(i) and less than off(i), see '&' operator)
-    currNumSpikes = sum(presentationSpikes); % count current number of spikes
-    presentationTime = ((off(i)-on(i))); % find the duration of current presentation, don't forget sampling rate!
-    fr(end+1) = currNumSpikes/presentationTime; % divide num spikes by time to get firing rate
+    currNumSpikes      = sum(presentationSpikes); % count current number of spikes
+    presentationTime   = ((off(i)-on(i))); % find the duration of current presentation
+    fr(end+1)          = currNumSpikes/presentationTime; % divide num spikes by time to get firing rate, and append to the end of your vector
 end
 
+% let's take a look at a histogram of the firing rates evoked by the
+% stimuli using the histogram function
+figure('Name','Histogram')
+nbins = 15;    % the number of bins we'll use for the histogram
+histogram(fr,nbins)
+xlabel('Firing Rate (Hz)')
+title('Histogram of Stimulus Evoked Firing Rates')
 
 %% Tuning curves!
 % Let's make a canonical tuning curve. To do this, we will need to know
@@ -126,17 +134,21 @@ uStim = unique(stim);
 
 % Like above, we will use a for loop. This time, it is to find the mean
 % firing rate for each stimulus gradient. We will accomplish this by
-% finding the trial indices that correspond to a given gradient (say, 0
+% finding the trial indices that correspond to a given orientation of stimulus (say, 0
 % degrees). Using the indices, we can grab the corresponding firing rates 
 % and calculate their mean. 
 
 meanFr = []; % declare meanFr as list so we can dynamically add to it
 
-for i = 1:length(uStim) % iterate through each unique gradient value
-    gradientInd = stim==uStim(i); % get indicies that correspond to current gradient
-    gradientFr = fr(gradientInd); % get current firing rates of interest by indexing 'fr'
-    meanFr(end+1) = mean(gradientFr); % take the mean
+for i = 1:length(uStim)                % iterate through each unique gradient value (i.e. orientation)
+    gradientInd = stim==uStim(i);      % get indicies that correspond to current gradient
+    gradientFr = fr(gradientInd);      % get current firing rates of interest by indexing 'fr'
+    meanFr(end+1) = mean(gradientFr);  % take the mean
 end
 
 %plot the firing rate against the stimulus presentations 
+figure('Name','Tuning Curve')
 plot(uStim,meanFr)
+xlabel('Orientation (degrees)'); 
+ylabel('Mean Firing Rate (Hz)'); 
+title('Orientation Tuning Curve');
