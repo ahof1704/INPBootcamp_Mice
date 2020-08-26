@@ -181,7 +181,7 @@ pkTime = timeTrial(mxIdx);
 
 %% Now we will look at whether the cells respond differently to various contrasts/sizes
 %  We will fill a vResp matrix (as our earlier visResp), but this time only
-%  use values between SvisOn and visOff
+%  use values between visOn and visOff
 
 vResp      =   zeros(length(visOn), max(visOff-visOn)+1);                    % initialize the matrix using the 'zeros' function.  What will the size of this matrix be? 
 
@@ -235,7 +235,7 @@ xd = (time(2:end)+time(1:(end-1)))/2;
 plot(time,cellData(:,1),time,cleanData,xd,yd)
 hold on; 
 [pks, visOnDetec] = findpeaks(yd, xd,'MinPeakDistance',2,'MinPeakHeight',max(meanResp)); % Use MinPeakHeight to restrict the type of peak you want (make it a fucntion of the meanResp. We are assuming 2s of distance)
-scatter(visOnDetec    , 10*ones(size(visOnDetec)),'+m');  %  plot onset times in green
+scatter(visOnDetec    , 10*ones(size(visOnDetec)),'+m');  %  plot detected spikes in magenta
 scatter(visOnT  , 10*ones(size(visOnT)),'*g');  %  plot onset times in green
 scatter(visOffT , 10*ones(size(visOffT)),'*r');  %  plot offset times in red
 lgd = legend({'Original Data','Smoothed Data','Derivative','Detected Peak', 'VisOn', 'VisOff'});

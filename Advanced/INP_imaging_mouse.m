@@ -218,7 +218,7 @@ set(gca,'FontSize',15)
 %% Task 6. Design a spike detector
 %% Now things will get interesting! We want you to design a detector for the
 %% neuron's response to the stimulus. 
-%% As a proxy for the GT, we will use the timestamps of visOn.
+%% As a proxy for the ground truth, we will use the timestamps of visOn.
 %% There are many ways to achieve this. Use your creativity. At the end of the Bootcamp, we will check who evaluate who obtained the best recall rate :)
 % Requirements:
 %  1) Avoid using fixed thresholds/constants for the detector. Try to make
@@ -231,7 +231,7 @@ set(gca,'FontSize',15)
 %  figure. Remember to do the usual formatting (axes labels, figure title,
 %  legend, etc.)
 %  Hint: Observe that you are not detecting the peak of cell activity, but
-%  when the stimulus presented (ie, when the cell activity starts to rise)
+%  when the stimulus is presented (ie, when the cell activity starts to rise)
 %  Hint 2: Note that the trace has a high-frequency noise component. You
 %  might be interested in filtering it out for better detection performance
 
