@@ -10,9 +10,14 @@
 
 
 %% Let's take a look
-% load the data by using the load command 
+
+% first we open a figure and name it
+figure('Name','Intracellular Recording');     %opens a figure and names it
+
+% Now load the data by using the load command 
 %(or double clicking on the file in the 'current folder' panel of the GUI)
 % and then plot the 'intra' variable
+
 
 load(); % load data
 plot(); % plot 'intra'
@@ -108,10 +113,10 @@ spikeTimes = ;
 
 fr = []; % declare fr as a list so we can dynamically add to it
 for i =1:length(on) % for each presentation
-    presentationSpikes = > & < ; % get spikes that fall into the presentation window (greater than on(i) and less than off(i), see '&' operator)
-    currNumSpikes      = ; % count current number of spikes
-    presentationTime   = ; % find the duration of current presentation, don't forget sampling rate!
-    fr(end+1)          = ; % divide num spikes by time to get firing rate.  We append this to the end of your vector fr using fr(end +1)
+    presentationSpikes = > & < ;     % get spikes that fall into the presentation window (greater than on(i) and less than off(i), see '&' operator)
+    currNumSpikes      = ;           % count current number of spikes
+    presentationTime   = ;           % find the duration of current presentation, don't forget sampling rate!
+    fr(end+1)          = ;           % divide num spikes by time to get firing rate.  We append this to the end of your vector fr using fr(end +1)
 end
 
 % let's take a look at a histogram of the firing rates evoked by the
