@@ -1,5 +1,5 @@
 % JAC 8-20-2019, updated 8-25-2019
-% Modified by CJB 8-24-2020
+% Modified by CJB-KAF-AF  8-27-2020, 
 
 % In each section, use the suggestions to fill in the variables and the
 % rest of the necessary code.
@@ -22,10 +22,7 @@
 % stim: orientations of the drifting gratings stimuli that were presented.
 % (degrees)
 
-%% Settings
 clear, close all
-fs_trace = 2e3;
-fs_stimulus = 1000e3;
 
 %%  What's in the data?
 % Take a look at the intracellular trace.  Plot the intra against the timestamp vector. 
@@ -101,20 +98,20 @@ wholeTraceMeanFr = ;
 
 % find the baseline firing rate from the initial portion of the trace
 % see the 'find' function
-baselineSpikes = ; % find all the spikes before the onset of the first stim
-baselineNumSpikes = ; % find the length of baselineNum, this gives you the number of spikes
-lastSpike = ; % find the time of the last spike in this series
-firstSpike = ; % find the time of the first spike in this series
-totalTime = ;  %find the number of seconds represented by that interval (take into account the sampling rate of the on/off timestamps [hint: 1,000,000])
-baseRate = ;         % find the mean firing rate
+baselineSpikes = ;       % find all the spikes before the onset of the first stim
+baselineNumSpikes = ;    % find the length of baselineNum, this gives you the number of spikes
+lastSpike = ;            % find the time of the last spike in this series
+firstSpike = ;           % find the time of the first spike in this series
+totalTime = ;            % find the number of seconds represented by that interval (take into account the sampling rate of the on/off timestamps [hint: 1,000,000])
+baseRate = ;             % find the mean firing rate
 
 
 fr = ; % preallocate fr variable
 for i = 
-    presentationSpikes = ; % get spikes that fall into the presentation window (greater than on(i) and less than off(i), see '&' operator)
-    currNumSpikes = ; % count current number of spikes
-    presentationTime = ; % find the duration of current presentation, don't forget sampling rate!
-    fr(i) = ; % divide num spikes by time to get firing rate
+    presentationSpikes = ;   % get spikes that fall into the presentation window (greater than on(i) and less than off(i), see '&' operator)
+    currNumSpikes = ;        % count current number of spikes
+    presentationTime = ;     % find the duration of current presentation, don't forget sampling rate!
+    fr(i) = ;                % divide num spikes by time to get firing rate
 end
 
 
@@ -128,15 +125,15 @@ scatter(,); %scatter the stimulus orientations against the firing rates
 % Calculate the mean and std of firing rates for each orientation
 
 
-uStim = ; % get unique orientation values
-meanFr = ; % preallocate for mean firing rate variable
-stdFr = ; % preallocate for std firing rate variable
+uStim = ;        % get unique orientation values
+meanFr = ;       % preallocate for mean firing rate variable
+stdFr = ;        % preallocate for std firing rate variable
 
 for i = 1:length(uStim) % iterate through each unique grading value
-    currInd = ; % get indicies that correspond to current grading
-    currFr = ; % get current firing rates of interest by indexing 'fr'
-    meanFr(i) = ; % take the mean
-    stdFr(i) = ; % gake the std
+    currInd = ;     % get indicies that correspond to current grading
+    currFr = ;      % get current firing rates of interest by indexing 'fr'
+    meanFr(i) = ;   % take the mean
+    stdFr(i) = ;    % gake the std
 end
 
 % What is the neuron's preferred orientation?
@@ -144,8 +141,8 @@ end
 
 errorbar(,) % plot the orientations vs the mean firing rates, adding the SEM error bars
 
-[maxFr,maxIndex]= % use max() to get the maximum fr and the index it occured 
-prefStim =  % use the maxIndex to get the optimum orientation from uStim
+[maxFr,maxIndex] =  ;      % use max() to get the maximum fr and the index it occured 
+prefStim =  l              % use the maxIndex to get the optimum orientation from uStim
 
 
 
@@ -164,9 +161,10 @@ for i =1:length(on)
     trialVmMean(i) = ;
 end
 
-meanMeanVm = ; % preallocate 
+meanMeanVm = ;      % preallocate 
 stdMeanVm  = ; 
-% can do like you did for spike section, but see if you can make it more
+
+% can do like you did for the spike section, but see if you can make the code a bit more
 % concise. Ask TA for help!
 for i =1: % iterate through each unique gradient value
     meanMeanVm(i) = ; % take mean of firing rates corresponding to current gradient

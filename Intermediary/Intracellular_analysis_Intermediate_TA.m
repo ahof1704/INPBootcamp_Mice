@@ -1,6 +1,6 @@
 
 % JAC 8-20-2019, updated 8-25-2019
-% Modified by CJB 8-24-2020
+% Modified by CJB-KAF-AF  8-27-2020, 
 
 % In each section, use the suggestions to fill in the variables and the
 % rest of the necessary code.
@@ -23,14 +23,14 @@
 % stim: orientations of the drifting gratings stimuli that were presented.
 % (degrees)
 
-%% Settings
+
 clear, close all
 
 
 %%  What's in the data?
 % Take a look at the intracellular trace.  Plot the intra against the timestamp vector. 
 
-load('../Data/Cell1_data.mat'); % load data
+load('../Data/Neuron1_data.mat'); % load data
 figure('Name','Intracellular trace'); 
 plot(timestamp,intra); % plot intra against timestamp
 title('Intracellular trace') 
@@ -108,7 +108,7 @@ hold on; % allow ploting of multiple plots
 plot(timestamp,intra);%plot the intracellular trace again
 scatter(spikeTimes,intra(locs)); % plot the detected spiketimes on top of the trace using your 'spikeTimes' vector and the 'intra' value at the location of each spike
 title('Stimulus orienation') 
-ylabel('Orientation (degres)')
+ylabel('Orientation (degrees)')
 xlabel('Time (s)')
 legend({'Trace', 'Spikes'});
 set(gca,'FontSize',15)
@@ -146,7 +146,7 @@ end
 figure('Name','Stimulus orientation vs Firing rate'); % make a new figure
 scatter(stim,fr); %scatter the stimulus orientations against the firing rates
 title('Stimulus orientation vs Firing rate') 
-xlabel('Orientation (degres)')
+xlabel('Orientation (degrees)')
 ylabel('Firing Rate (Spikes/sec)')
 set(gca,'FontSize',15)
 %%
@@ -172,7 +172,7 @@ end
 figure('Name','Stimulus orientation vs Firing rate'); % make a new figure
 errorbar(uStim,meanFr,stdFr/sqrt(sum(stim==uStim(i)))) % plot the orientations vs the mean firing rates, adding the SEM error bars
 title('Stimulus orientation vs Firing rate') 
-xlabel('Orientation (degres)')
+xlabel('Orientation (degrees)')
 ylabel('Firing Rate (Spikes/sec)')
 set(gca,'FontSize',15)
 
@@ -204,7 +204,7 @@ end
 figure('Name','Stimulus orientation vs membrane potential'); % make a new figure
 errorbar(uStim,meanMeanVm,stdMeanVm/sqrt(sum(stim==uStim(i))))
 title('Stimulus orientation vs membrane potential') 
-xlabel('Orientation (degres)')
+xlabel('Orientation (degrees)')
 ylabel('Membrane potential (mV)')
 set(gca,'FontSize',15)
 
