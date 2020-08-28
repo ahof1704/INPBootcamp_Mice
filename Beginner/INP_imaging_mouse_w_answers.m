@@ -129,7 +129,7 @@ outputFigName = ['Neuron_' , num2str(nrnNum),'_size_tuning_curve'];             
 
 % Save the data visResp , stimAxis, meanData, and semData.  Make sure it is saving in your
 % desired folder (i.e. specify your path)
-save(['../Data/Neuron_',num2str(nrnNum)], 'visResp', 'meanData','semData');               % change '../Data/' to your own path to save the data
+save(['../Data/Neuron_',num2str(nrnNum)], 'vResp', 'meanData','semData');               % change '../Data/' to your own path to save the data
 
 % Save the plots as .fig, .jpg, .eps.  For .jpg , .eps, open them to make
 % sure they've saved as you intended.  
